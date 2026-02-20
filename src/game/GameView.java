@@ -1,7 +1,14 @@
 package game;
-import city.cs.engine.*;
 
+import city.cs.engine.UserView;
+import city.cs.engine.World;
+
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.geom.Point2D;
+
 //DESCRIBES RENDERING...
 
 public class GameView extends UserView{
@@ -10,7 +17,7 @@ public class GameView extends UserView{
 
     public GameView(World w, int width, int height)
     {super(w, width, height);
-//       background = new ImageIcon("data/ForestDay.png").getImage();
+        background = new ImageIcon("data/ForestNight.png").getImage();
     }//constructor
 
     @Override
