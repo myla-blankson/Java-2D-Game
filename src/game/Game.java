@@ -1,7 +1,10 @@
 package game;
-import city.cs.engine.*;
 
-import city.cs.engine.World;
+import city.cs.engine.*;
+import city.cs.engine.Shape;
+import org.jbox2d.common.Vec2;
+import javax.swing.JFrame;
+
 //Starts the program
 //Runs the game loop
 //updates and rendering
@@ -10,10 +13,10 @@ import city.cs.engine.World;
 
 public class Game {
 
-    //The World in which the bodies move and interact. */
+    //The World in which the bodies move and interact
     private GameWorld world;
 
-    /** A graphical display of the world (a specialised JPanel). */
+    // A graphical display of the world (a specialised JPanel)
     private GameView view;
 
 
