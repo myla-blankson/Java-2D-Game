@@ -20,13 +20,33 @@ public class Game {
     private GameView view;
 
 
-    public Game(){
+    public Game() {
+
+        // make the world
 
         GameWorld gameWorld = new GameWorld(); // creating game world
         UserView view = new UserView(gameWorld, 800, 600);
 
-    }
+        PlayerController controller = new PlayerController(gameWorld.getPlayer());
+        view.addKeyListener(controller); //registered key event to source
 
+        // add the view to a frame (Java top level window)
+        final JFrame frame = new JFrame("CoinHeist");
+        frame.add(view);
+        // enable the frame to quit the application
+        // when the x button is pressed
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationByPlatform(true);
+        // don't let the frame be resized
+        frame.setResizable(false);
+        // size the frame to fit the world view
+        frame.pack();
+        // finally, make the frame visible
+        frame.setVisible(true);
+
+        gameWorld.start();
+
+    }
 
 
     public static void main(String[] args) {

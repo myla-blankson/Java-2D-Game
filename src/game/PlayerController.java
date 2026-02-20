@@ -41,7 +41,7 @@ public class PlayerController implements KeyListener { // remember to register e
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
         if (code == KeyEvent.VK_LEFT) {
-            player.stopWalking(); // implementing
+            player.stopWalking();
         } else if (code == KeyEvent.VK_RIGHT) {
             player.stopWalking();
 

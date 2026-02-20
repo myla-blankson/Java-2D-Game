@@ -12,7 +12,7 @@ public class Player extends Walker {
             0.24f,-2.32f,
             -1.12f,-2.27f,
             -1.24f,1.21f);
-    private static final BodyImage playerImage = new BodyImage("data/player.png", 5f);
+    private static final BodyImage playerImage = new BodyImage("data/player1.png", 5f);
     //creating an invariable, limited access image for the player using BodyImage as a type
 
     private int score;

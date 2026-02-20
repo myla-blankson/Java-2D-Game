@@ -13,11 +13,11 @@ import java.awt.geom.Point2D;
 
 public class GameView extends UserView{
 
-    private Image background;
+    private final Image background;
 
     public GameView(World w, int width, int height)
     {super(w, width, height);
-        background = new ImageIcon("data/ForestNight.png").getImage();
+        background = new ImageIcon("data/forest.png").getImage();
     }//constructor
 
     @Override

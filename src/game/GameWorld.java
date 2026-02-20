@@ -32,10 +32,12 @@ public class GameWorld extends World{
 
 
 
-//        player = new PLayer(this);
-//        player.setPosition(new Vec2(8, -10));
+        player = new Player(this);
+        player.setPosition(new Vec2(8, -10));
 
 // create 5? coins, perhaps more coins as levels increase and a time for player to collect as many within an amount of time
+        //coin1 = new Coin(this);
+        //coin1.setPosition(new(Vec2()))
 
 
 
@@ -44,5 +46,7 @@ public class GameWorld extends World{
     }
 
 
-
+    public Player getPlayer() {
+        return player;
+    }
 }
