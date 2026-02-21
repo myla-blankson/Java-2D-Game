@@ -2,6 +2,8 @@ package game;
 
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
+import city.cs.engine.Body;
+
 
 
 public class GameWorld extends World{
@@ -31,13 +33,25 @@ public class GameWorld extends World{
 
 
 
-
         player = new Player(this);
         player.setPosition(new Vec2(8, -10));
+        PlayerCollisions pickup = new PlayerCollisions(player);
+        player.addCollisionListener(pickup);
 
 // create 5? coins, perhaps more coins as levels increase and a time for player to collect as many within an amount of time
         //coin1 = new Coin(this);
         //coin1.setPosition(new(Vec2()))
+
+        Coin coin1 = new Coin(this);
+        coin1.setPosition(new Vec2(5, -5));
+        coin1.addCollisionListener(new PlayerCollisions(player));
+        // Once the player comes in contact or overlaps with the coin, the listener is made aware.
+        // The listener object creates an instance where it will execute its defined collide method
+        //(by adding 10 to the score and displaying it with a message)
+
+        Coin coin2 = new Coin(this);
+        coin2.setPosition(new Vec2(10, 3));
+        coin2.addCollisionListener(new PlayerCollisions(player));
 
 
 
@@ -49,4 +63,5 @@ public class GameWorld extends World{
     public Player getPlayer() {
         return player;
     }
+
 }

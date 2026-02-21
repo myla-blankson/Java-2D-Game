@@ -31,8 +31,7 @@ public class Game {
         PlayerController controller = new PlayerController(gameWorld.getPlayer());
         view.addKeyListener(controller); //registered key event to source
 
-        gameWorld.addStepListener(new Tracker(view, gameWorld.getPlayer()) {
-        });
+        gameWorld.addStepListener(new Tracker(view, gameWorld.getPlayer()) {});
 
         // add the view to a frame (Java top level window)
         final JFrame frame = new JFrame("Coin Snatcher");

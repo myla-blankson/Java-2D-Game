@@ -28,24 +28,28 @@ public class Player extends Walker {
 
 
 
-    public void setScore (int score){
-        this.score = score; //  if player collides with coins, coins increments...
+    public void addScore (int score){
+        this.score = score; //  if player collides with coins, collected amount increments...
     }
     public int getScore () {
-        return score; // make coins methods public so that can access and use to modify here
+        return score;
     }
     public boolean isAlive () {
         return isAlive;
     }
 
 
+    }
 
 
 
 
 
 
-}
+
+
+
+
 
 
 

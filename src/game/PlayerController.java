@@ -25,7 +25,7 @@ public class PlayerController implements KeyListener { // remember to register e
         if (code == KeyEvent.VK_LEFT) {
             player.startWalking(-speed); // implementing method from Walker class and applying to Player instance, 'player'
         } else if (code == KeyEvent.VK_RIGHT) {
-            player.startWalking(speed * 2);
+            player.startWalking(speed);
         } else if (code == KeyEvent.VK_UP) {
             player.jump(5);
         }else if (code == KeyEvent.VK_DOWN) {
