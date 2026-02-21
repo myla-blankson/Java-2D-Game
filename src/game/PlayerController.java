@@ -9,17 +9,15 @@ import java.util.HashMap;
 
 public class PlayerController implements KeyListener { // remember to register event...
 // all methods must be implemented and overridden or class must be declared as abstract...
-    private static final float speed = 2;
+    private static final float speed = 3;
     private Player player;
 
     public PlayerController(Player player) {
-        this.player = player;
+        this.player = player; // store player object inside PlayerController
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
+    public void keyTyped(KeyEvent e) {}
 
     @Override
     public void keyPressed(KeyEvent e) {

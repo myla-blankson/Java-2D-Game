@@ -14,7 +14,7 @@ public class GameWorld extends World{
         // creates
 
         //make the ground
-        Shape shape = new BoxShape(11, 0.5f); // shape is
+        Shape shape = new BoxShape(22, 0.5f); // shape is
         StaticBody ground = new StaticBody(this, shape);
         ground.setPosition(new Vec2(0f, -11.5f));
         ground.addImage(new BodyImage("./data/ground.png", 1f));

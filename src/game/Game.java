@@ -14,7 +14,7 @@ import javax.swing.JFrame;
 public class Game {
 
     //The World in which the bodies move and interact
-    private GameWorld world;
+    private GameWorld gameWorld;
 
     // A graphical display of the world (a specialised JPanel)
     private GameView view;
@@ -25,19 +25,21 @@ public class Game {
         // make the world
 
         GameWorld gameWorld = new GameWorld(); // creating game world
-        UserView view = new UserView(gameWorld, 800, 600);
+        view = new GameView(gameWorld, 800, 600);
+        view.setZoom(15);
 
         PlayerController controller = new PlayerController(gameWorld.getPlayer());
         view.addKeyListener(controller); //registered key event to source
 
+        gameWorld.addStepListener(new Tracker(view, gameWorld.getPlayer()) {
+        });
+
         // add the view to a frame (Java top level window)
-        final JFrame frame = new JFrame("CoinHeist");
-        frame.add(view);
-        // enable the frame to quit the application
-        // when the x button is pressed
+        final JFrame frame = new JFrame("Coin Snatcher");
+        frame.add(view); //adds view type UserView to frame
+        // when the x button is pressed, application terminates
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationByPlatform(true);
-        // don't let the frame be resized
         frame.setResizable(false);
         // size the frame to fit the world view
         frame.pack();
