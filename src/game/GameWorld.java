@@ -1,6 +1,7 @@
 package game;
 
 import city.cs.engine.*;
+import org.jbox2d.common.Timer;
 import org.jbox2d.common.Vec2;
 import city.cs.engine.Body;
 
@@ -12,6 +13,7 @@ public class GameWorld extends World{
     private boolean gameWon = false;
    private boolean  gameOver = false;
    private int timeRemaining = 60;
+   private Timer timer;
 
 
     public GameWorld() {
@@ -19,7 +21,7 @@ public class GameWorld extends World{
 
         //make the ground
         Shape shape = new BoxShape(22, 0.5f);
-        StaticBody ground = new StaticBody(this, shape);
+        StaticBody ground = new StaticBody(this, shape); //enabling fixtures...
         ground.setPosition(new Vec2(0f, -11.5f));
         ground.addImage(new BodyImage("./data/ground.png", 1f));
 

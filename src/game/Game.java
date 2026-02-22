@@ -2,6 +2,7 @@ package game;
 
 import city.cs.engine.*;
 import city.cs.engine.Shape;
+import org.jbox2d.common.Timer;
 import org.jbox2d.common.Vec2;
 import javax.swing.JFrame;
 
@@ -20,16 +21,20 @@ public class Game {
     private GameView view;
 
 
+
     public Game() {
 
         // make the world
 
         GameWorld gameWorld = new GameWorld(); // creating game world
-        view = new GameView(gameWorld,800, 600); //make sure all parameters are recognised in GameView class
+        view = new GameView(gameWorld,600, 800); //make sure all parameters are recognised in GameView class
         view.setZoom(15);
 
         PlayerController controller = new PlayerController(gameWorld.getPlayer());
-        view.addKeyListener(controller); //registered key event to source
+        view.addKeyListener(controller); //registered key event to view (source)
+
+        view.setFocusable(true);
+        view.requestFocus();
 
         gameWorld.addStepListener(new Tracker(view, gameWorld.getPlayer()) {});
 
@@ -45,9 +50,17 @@ public class Game {
         // Make the frame visible
         frame.setVisible(true);
 
+
         gameWorld.start();
 
+
+
     }
+
+
+
+
+
 
 
     public static void main(String[] args) {

@@ -18,6 +18,7 @@ public class GameView extends UserView{
 
     public GameView(GameWorld gameWorld, int width, int height) {
         super(gameWorld, width, height);
+        this.gameWorld = gameWorld;
 
         background = new ImageIcon("data/forest.png").getImage();
 

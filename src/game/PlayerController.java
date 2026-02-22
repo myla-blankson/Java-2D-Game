@@ -9,8 +9,10 @@ import java.util.HashMap;
 
 public class PlayerController implements KeyListener { // remember to register event...
 // all methods must be implemented and overridden or class must be declared as abstract...
+    // implementing an interface means that you will define the methods (polymorphism)
     private static final float speed = 3;
     private Player player;
+    private HashMap<Body, BodyImage> hiddenImages = null;
 
     public PlayerController(Player player) {
         this.player = player; // store player object inside PlayerController
@@ -22,14 +24,15 @@ public class PlayerController implements KeyListener { // remember to register e
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
+        System.out.println("Key Pressed: " + code);  // Debugging line
         if (code == KeyEvent.VK_LEFT) {
             player.startWalking(-speed); // implementing method from Walker class and applying to Player instance, 'player'
         } else if (code == KeyEvent.VK_RIGHT) {
             player.startWalking(speed);
         } else if (code == KeyEvent.VK_UP) {
-            player.jump(5);
+            player.jump(15);
         }else if (code == KeyEvent.VK_DOWN) {
-            player.jump(-5);
+            player.jump(-15);
         }
 
 
@@ -38,6 +41,7 @@ public class PlayerController implements KeyListener { // remember to register e
     @Override
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
+        System.out.println("Key Pressed: " + code);
         if (code == KeyEvent.VK_LEFT) {
             player.stopWalking();
         } else if (code == KeyEvent.VK_RIGHT) {
