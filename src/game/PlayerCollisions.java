@@ -7,7 +7,7 @@ public class PlayerCollisions implements CollisionListener {
     private Player player;
     public PlayerCollisions (Player player) {
         this.player = player;
-    }
+    }// this class
     @Override
     public void collide (CollisionEvent e) {
         if (e.getOtherBody() instanceof Coin) {

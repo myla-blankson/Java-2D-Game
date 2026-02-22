@@ -9,14 +9,16 @@ import city.cs.engine.Body;
 public class GameWorld extends World{
 
     private Player player;
+    private boolean gameWon = false;
+   private boolean  gameOver = false;
+   private int timeRemaining = 60;
+
 
     public GameWorld() {
 
 
-        // creates
-
         //make the ground
-        Shape shape = new BoxShape(22, 0.5f); // shape is
+        Shape shape = new BoxShape(22, 0.5f);
         StaticBody ground = new StaticBody(this, shape);
         ground.setPosition(new Vec2(0f, -11.5f));
         ground.addImage(new BodyImage("./data/ground.png", 1f));
@@ -38,20 +40,20 @@ public class GameWorld extends World{
         PlayerCollisions pickup = new PlayerCollisions(player);
         player.addCollisionListener(pickup);
 
-// create 5? coins, perhaps more coins as levels increase and a time for player to collect as many within an amount of time
-        //coin1 = new Coin(this);
-        //coin1.setPosition(new(Vec2()))
+// create 5? coins, perhaps more coins as levels increase and a timer for player to collect as many within an amount of time
 
         Coin coin1 = new Coin(this);
         coin1.setPosition(new Vec2(5, -5));
         coin1.addCollisionListener(new PlayerCollisions(player));
-        // Once the player comes in contact or overlaps with the coin, the listener is made aware.
+        // Once the player comes in contact or overlaps with the coin, the listener is made aware
         // The listener object creates an instance where it will execute its defined collide method
         //(by adding 10 to the score and displaying it with a message)
 
         Coin coin2 = new Coin(this);
         coin2.setPosition(new Vec2(10, 3));
         coin2.addCollisionListener(new PlayerCollisions(player));
+
+        // could create an array storing multiple coins in random areas...
 
 
 
@@ -62,6 +64,15 @@ public class GameWorld extends World{
 
     public Player getPlayer() {
         return player;
+    }
+    public int getTimeRemaining(){
+        return timeRemaining;
+    }
+    public boolean isGameOver() {
+        return gameOver;
+    }
+    public boolean isGameWon() {
+        return gameWon;
     }
 
 }

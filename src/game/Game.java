@@ -25,7 +25,7 @@ public class Game {
         // make the world
 
         GameWorld gameWorld = new GameWorld(); // creating game world
-        view = new GameView(gameWorld, 800, 600);
+        view = new GameView(gameWorld,800, 600); //make sure all parameters are recognised in GameView class
         view.setZoom(15);
 
         PlayerController controller = new PlayerController(gameWorld.getPlayer());
@@ -35,14 +35,14 @@ public class Game {
 
         // add the view to a frame (Java top level window)
         final JFrame frame = new JFrame("Coin Snatcher");
-        frame.add(view); //adds view type UserView to frame
+        frame.add(view); //adds view (type GameView which inherited from UserView class) to frame
         // when the x button is pressed, application terminates
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationByPlatform(true);
         frame.setResizable(false);
         // size the frame to fit the world view
         frame.pack();
-        // finally, make the frame visible
+        // Make the frame visible
         frame.setVisible(true);
 
         gameWorld.start();
@@ -54,3 +54,5 @@ public class Game {
         new Game();
     }
 }
+//perhaps, add sound later...
+// add levels...
