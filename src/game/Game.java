@@ -33,8 +33,8 @@ public class Game {
         PlayerController controller = new PlayerController(gameWorld.getPlayer());
         view.addKeyListener(controller); //registered key event to view (source)
 
-        view.setFocusable(true);
-        view.requestFocus();
+//        registering key event
+        view.addMouseListener(new GiveFocus(view));
 
         gameWorld.addStepListener(new Tracker(view, gameWorld.getPlayer()) {});
 
