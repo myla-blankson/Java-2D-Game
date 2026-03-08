@@ -1,17 +1,21 @@
 package game;
 
 import city.cs.engine.*;
-import org.jbox2d.common.Timer;
 import org.jbox2d.common.Vec2;
 import city.cs.engine.Body;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
 
 
 
-public class GameWorld extends World {
+public class GameWorld extends World implements ActionListener {
 
     private Player player;
     private boolean gameWon = false;
     private boolean gameOver = false;
+    private int collectedCoins = 0;
+    private int totalCoins = 10;
     private int timeRemaining = 60;
     private Timer timer;
 
@@ -38,66 +42,82 @@ public class GameWorld extends World {
 
         player = new Player(this);
         player.setPosition(new Vec2(8, -10));
-        PlayerCollisions pickup = new PlayerCollisions(player);
+        PlayerCollisions pickup = new PlayerCollisions(player,this);
         player.addCollisionListener(pickup);
 
 // create 5? coins, perhaps more coins as levels increase and a timer for player to collect as many within an amount of time
 
         Coin coin1 = new Coin(this);
         coin1.setPosition(new Vec2(5, -5));
-        coin1.addCollisionListener(new PlayerCollisions(player));
+        coin1.addCollisionListener(new PlayerCollisions(player,this));
         // Once the player comes in contact or overlaps with the coin, the listener is made aware
         // The listener object creates an instance where it will execute its defined collide method
         //(by adding 10 to the score and displaying it with a message)
 
         Coin coin2 = new Coin(this);
         coin2.setPosition(new Vec2(10, 3));
-        coin2.addCollisionListener(new PlayerCollisions(player));
+        coin2.addCollisionListener(new PlayerCollisions(player,this));
 
         // Coin 3
         Coin coin3 = new Coin(this);
         coin3.setPosition(new Vec2(15, -2));
-        coin3.addCollisionListener(new PlayerCollisions(player));
+        coin3.addCollisionListener(new PlayerCollisions(player,this));
 
         // Coin 4
         Coin coin4 = new Coin(this);
         coin4.setPosition(new Vec2(-6, 3));
-        coin4.addCollisionListener(new PlayerCollisions(player));
+        coin4.addCollisionListener(new PlayerCollisions(player,this));
 
         // Coin 5
         Coin coin5 = new Coin(this);
         coin5.setPosition(new Vec2(-10, -7));
-        coin5.addCollisionListener(new PlayerCollisions(player));
+        coin5.addCollisionListener(new PlayerCollisions(player,this));
 
         // Coin 6
         Coin coin6 = new Coin(this);
         coin6.setPosition(new Vec2(0, 7));
-        coin6.addCollisionListener(new PlayerCollisions(player));
+        coin6.addCollisionListener(new PlayerCollisions(player,this));
 
         // Coin 7
         Coin coin7 = new Coin(this);
         coin7.setPosition(new Vec2(20, -6));
-        coin7.addCollisionListener(new PlayerCollisions(player));
+        coin7.addCollisionListener(new PlayerCollisions(player,this));
 
         // Coin 8
         Coin coin8 = new Coin(this);
         coin8.setPosition(new Vec2(18, 5));
-        coin8.addCollisionListener(new PlayerCollisions(player));
+        coin8.addCollisionListener(new PlayerCollisions(player,this));
 
         // Coin 9
         Coin coin9 = new Coin(this);
         coin9.setPosition(new Vec2(-15, -3));
-        coin9.addCollisionListener(new PlayerCollisions(player));
+        coin9.addCollisionListener(new PlayerCollisions(player,this));
 
         // Coin 10
         Coin coin10 = new Coin(this);
         coin10.setPosition(new Vec2(-12, 6));
-        coin10.addCollisionListener(new PlayerCollisions(player));
+        coin10.addCollisionListener(new PlayerCollisions(player,this));
 
 
         // could create an array storing multiple coins in random areas...
+        timer = new Timer(1000, this);
+        timer.start();
 
 
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        timeRemaining--;
+        if (collectedCoins == totalCoins) {
+            gameWon = true;
+            timer.stop(); // try to implement 'play again' or 'next level'
+        }
+        if (timeRemaining <= 0 && collectedCoins < totalCoins) {
+            gameOver = true;
+            timer.stop();
+            timer.restart();
+        }// every second timeRemaining decreases by 1 till 60 then gameOver if collected coins<total...
     }
 
 
@@ -109,15 +129,25 @@ public class GameWorld extends World {
         return timeRemaining;
     }
 
+
     public boolean isGameOver() {
         return gameOver;
     }
 
+
     public boolean isGameWon() {
-            return gameWon;
-        }
-
-
-
-
+        return gameWon;
     }
+
+//add functions to 
+    public void CollectCoins() {
+        collectedCoins++;
+    }
+
+
+    public int getCollectedCoins() {
+        return collectedCoins; //maybe multiply by a value to gain more points?
+    }
+
+}
+

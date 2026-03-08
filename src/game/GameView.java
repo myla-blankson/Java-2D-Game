@@ -24,7 +24,7 @@ public class GameView extends UserView{
 
     }
 
-    public GameWorld getGameWorld() { // this method allows me to essentially get my world to apply the methods
+    public GameWorld getGameWorld() { // this method essentially allows me to get my world to apply the methods
         return gameWorld;
     }
 
@@ -50,14 +50,14 @@ public class GameView extends UserView{
         //this getTimeRemaining method will give the player a certain amount of time as a challenge...
         //defined in GameWorld
 
-        // Game Won...
+        // Game Won Display...
         if (getGameWorld().isGameWon()) {
             g.setFont(new Font("Arial", Font.BOLD, 30));
             g.setColor(Color.GREEN);
             g.drawString("YOU WIN!", 250, 300);
         }
 
-        // Game Lost...
+        // Game Lost Display...
         if (getGameWorld().isGameOver() && !getGameWorld().isGameWon()) { //
             g.setFont(new Font("Arial", Font.BOLD, 30));
             g.setColor(Color.RED);
