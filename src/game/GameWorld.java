@@ -16,13 +16,15 @@ public class GameWorld extends World implements ActionListener {
     private boolean gameOver = false;
     private int collectedCoins = 0;
     private int totalCoins = 10;
-    private int timeRemaining = 60;
+    private int timeRemaining = 10;
     private Timer timer;
+    private Game game;
 
 
-    public GameWorld() {
 
+    public GameWorld(Game game) {
 
+        this.game = game;
         //make the ground
         Shape shape = new BoxShape(22, 0.5f);
         StaticBody ground = new StaticBody(this, shape); //enabling fixtures...
@@ -100,11 +102,13 @@ public class GameWorld extends World implements ActionListener {
 
 
         // could create an array storing multiple coins in random areas...
+
+
         timer = new Timer(1000, this);
         timer.start();
-
-
     }
+
+
 
     @Override
     public void actionPerformed(ActionEvent ae) {
@@ -112,11 +116,12 @@ public class GameWorld extends World implements ActionListener {
         if (collectedCoins == totalCoins) {
             gameWon = true;
             timer.stop(); // try to implement 'play again' or 'next level'
+            game.goToNextLevel();
         }
-        if (timeRemaining <= 0 && collectedCoins < totalCoins) {
+        else if (timeRemaining <= 0 && collectedCoins < totalCoins) {
             gameOver = true;
-            timer.stop();
-            timer.restart();
+            game.restartLevel();
+
         }// every second timeRemaining decreases by 1 till 60 then gameOver if collected coins<total...
     }
 
@@ -148,6 +153,10 @@ public class GameWorld extends World implements ActionListener {
     public int getCollectedCoins() {
         return collectedCoins; //maybe multiply by a value to gain more points?
     }
+
+
+
+
 
 }
 

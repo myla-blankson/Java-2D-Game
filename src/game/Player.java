@@ -18,7 +18,7 @@ public class Player extends Walker {
     private int score;
     private boolean isAlive;
 
-    public Player(GameWorld gameWorld) {
+    public Player(World gameWorld) { //World enables player to be used on any level
         super(gameWorld, playerShape);
         addImage(playerImage);
         score = 0;

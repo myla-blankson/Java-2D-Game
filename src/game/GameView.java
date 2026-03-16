@@ -15,10 +15,10 @@ public class GameView extends UserView{
 
     private final Image background;
     private GameWorld gameWorld; // storing my GameWorld here as a variable so that I can easily access it
-
-    public GameView(GameWorld gameWorld, int width, int height) {
-        super(gameWorld, width, height);
-        this.gameWorld = gameWorld;
+    private GameLevel level;
+    public GameView(GameLevel level, int width, int height) {
+        super(level, width, height);
+        this.level = level;
 
         background = new ImageIcon("data/forest.png").getImage();
 
