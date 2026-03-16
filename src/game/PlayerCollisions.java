@@ -5,12 +5,13 @@ import city.cs.engine.CollisionListener;
 
 public class PlayerCollisions implements CollisionListener {
     private Player player;
-    private GameWorld gameWorld;
+    //private GameWorld gameWorld;
+    private GameLevel level;
 
 
-    public PlayerCollisions (Player player, GameWorld gameWorld) {
+    public PlayerCollisions (Player player, GameLevel level) {
         this.player = player;
-        this.gameWorld = gameWorld;
+        this.level = level;
 
     }// this class
     @Override
@@ -18,7 +19,7 @@ public class PlayerCollisions implements CollisionListener {
         if (e.getOtherBody() instanceof Coin) {
             player.addScore(10);
             e.getOtherBody().destroy();
-            gameWorld.CollectCoins();
+            level.CollectCoins(); // changed to 'level' instead of 'gameWorld'
             System.out.println("You collected the coin!"+ "score:"+player.getScore());
             //...
         }
