@@ -19,9 +19,9 @@ public class PlayerCollisions implements CollisionListener {
         if (e.getOtherBody() instanceof Coin) {
             player.addScore(10);
             e.getOtherBody().destroy();
-            level.CollectCoins(); // changed to 'level' instead of 'gameWorld'
+            level.collectCoins(); // changed to 'level' instead of 'gameWorld'
             System.out.println("You collected the coin!"+ "score:"+player.getScore());
-            //...
+            //... sound?
         }
     }
 }
