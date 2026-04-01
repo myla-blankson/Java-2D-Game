@@ -11,20 +11,25 @@ import javax.swing.*;
 //concrete class
 public class Level1 extends GameLevel { //inherits from the original GameWorld to create a level instance
     public Level1(Game game) {
-        super(game);
-        define();
+        super(game); // enables inheritance as child class calls parent constructor
         createCoins(10);
         totalCoins = coins.size();
+        timeRemaining = 30;
 
-    } // must be declared abstract... or implement define() method
+    } // must be declared abstract... or implement create() method as below
     @Override
-    public void define() {
+    public void create() {
 
         this.game= game;
-        Shape shape = new BoxShape(22, 0.5f);
-        StaticBody ground = new StaticBody(this, shape); //enabling fixtures...
+        Shape shape = new BoxShape(200, 0.5f);
+        StaticBody ground = new StaticBody(this, shape);
         ground.setPosition(new Vec2(0f, -11.5f));
         ground.addImage(new BodyImage("./data/ground.png", 1f));
+
+//        Shape shape = new BoxShape(22, 0.5f);
+//        StaticBody ground = new StaticBody(this, shape); //enabling fixtures...
+//        ground.setPosition(new Vec2(0f, -11.5f));
+//        ground.addImage(new BodyImage("./data/ground.png", 1f));
 
         Shape platformShape = new BoxShape(2.5f, 0.5f); // creating default shape of platforms
 
@@ -37,10 +42,11 @@ public class Level1 extends GameLevel { //inherits from the original GameWorld t
         platform2.addImage(new BodyImage("./data/platform.png", 1f));
 
 
-        player = new Player(this);
+
         player.setPosition(new Vec2(8, -10));
         PlayerCollisions pickup = new PlayerCollisions(player,this);
         player.addCollisionListener(pickup);
+
 
 // create 5? coins, perhaps more coins as levels increase and a timer for player to collect as many within an amount of time
 
@@ -99,23 +105,11 @@ public class Level1 extends GameLevel { //inherits from the original GameWorld t
         // could create an array storing multiple coins in random areas...
 
 
-        timer = new Timer(1000, this);
-        timer.start();
-    }
-    public void createCoins(int numCoins) {
-        coins.clear();  // deletes old coins (from list) if restarting
+        //timer = new Timer(1000, this);
+        //timer.start();
 
-        for (int i = 0; i < numCoins; i++) { //for the total amount of coins, create an object Coin
-            Coin coin = new Coin(this);
-            // random positions
-            float x = (float)(Math.random() * 30 - 15);
-            float y = (float)(Math.random() * 10 - 2);
-            coin.setPosition(new Vec2(x, y));
-            coin.addCollisionListener(new PlayerCollisions(player, this)); //make sure each coin is detected
-
-            coins.add(coin);  // store in  list
-        }
     }
+
 
     }
 

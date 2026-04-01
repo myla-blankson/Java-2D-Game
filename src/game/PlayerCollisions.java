@@ -20,7 +20,7 @@ public class PlayerCollisions implements CollisionListener {
             player.addScore(10);
             e.getOtherBody().destroy();
             level.collectCoins(); // changed to 'level' instead of 'gameWorld'
-            System.out.println("You collected the coin!"+ "score:"+player.getScore());
+            System.out.println("You collected the coin!"+ "score: "+player.getScore());
             //... sound?
         }
     }

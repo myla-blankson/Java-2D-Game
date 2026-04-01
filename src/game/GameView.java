@@ -23,17 +23,19 @@ public class GameView extends UserView{
         background = new ImageIcon("data/forest.png").getImage();
 
     }
-
-//    public GameWorld getGameWorld() { // this method essentially allows me to get my world to apply the methods
-//        return gameWorld;
-//    }
-    public GameLevel getGameLevel() {
-        return level;
+    public void setLevel(GameLevel level) { // updates level field
+        this.level = level;
     }
+
+
+
+    //public GameLevel getGameLevel() {
+        //return level;
+    //}
 
     @Override
     protected void paintBackground(Graphics2D g) {
-        g.drawImage(background, 0, 40, this);
+        g.drawImage(background, 0, 30, this);
     }
 
     @Override
@@ -58,6 +60,7 @@ public class GameView extends UserView{
             g.setFont(new Font("Arial", Font.BOLD, 30));
             g.setColor(Color.GREEN);
             g.drawString("YOU WIN!", 250, 300);
+
         }
 
         // Game Lost Display...

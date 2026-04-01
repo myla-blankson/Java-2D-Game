@@ -35,17 +35,21 @@ public abstract class GameLevel extends World implements ActionListener { // abs
         this.game = game;
 
         coins = new ArrayList<>();
+
         player = new Player(this); //player is set in the world
         player.setPosition(new Vec2(0, -10));
+        create();
 
         timer = new Timer(1000, this);
         timer.start();
 
 
+
     }
+
     public void setPlayer(Player player) {
         this.player = player;
-        player.setPosition(new Vec2(0, -10));  // Reset player position to start point
+        player.setPosition(new Vec2(8, -10));  // Reset player position to start point
     }
 
     public Player getPlayer() {
@@ -72,48 +76,83 @@ public abstract class GameLevel extends World implements ActionListener { // abs
     public int getCollectedCoins() {
         return collectedCoins; //maybe multiply by a value to gain more points?
     }
+
     public List<Coin> getCoins() {
         return coins;
     }
-    public void createCoins(int numCoins) {
-        coins.clear();  // deletes old coins (from list) if restarting
 
-        for (int i = 0; i < numCoins; i++) { //for the total amount of coins, create an object Coin
-            Coin coin = new Coin(this);
-            // random positions
-            float x = (float)(Math.random() * 30 - 15);
-            float y = (float)(Math.random() * 10 - 2);
-            coin.setPosition(new Vec2(x, y));
-            coin.addCollisionListener(new PlayerCollisions(player, this)); //make sure each coin is detected
+    public void stopLevel(){
+        this.stop();
+        timer.stop();
 
-            coins.add(coin);  // store in  list
-        } // or create abstract method createCoins() here, and then actually define in other concrete classes like Level1
-    }//that would demonstrate polymorphism ...
-
-
-    public abstract void define();
-
-
-    @Override
-    public void actionPerformed(ActionEvent ae) {
-        if (gameOver || gameWon){
-            timer.stop();
-            return;
-        }
-
-        timeRemaining--;
-        if (collectedCoins == totalCoins) {
-            gameWon = true;
-            timer.stop(); // try to implement 'play again' or 'next level'
-            game.goToNextLevel();
-        } else if (timeRemaining <= 0 && collectedCoins < totalCoins) {
-            gameOver = true;
-            game.restartLevel();
-
-
-        }
+    }// by creating these two methods, we enable encapsulation to avoid the problem of multiple timers
+    public void startTimer() {
+        if (timer != null) timer.stop(); // this checks first if a timer exists and then stops it.
+        timer = new Timer(1000, this);// it avoids a null pointer exception (no object existing)
+        timer.start();
     }
 
+    public void stopTimer() {
+        if (timer != null) timer.stop();
+    }
+
+    public void createCoins(int numCoins) {
+        for (Coin c : coins) {
+            c.destroy();  // Destroy all coins
+        }
+
+            coins.clear();  // deletes old coins (from list) if restarting
+
+            for (int i = 0; i < numCoins; i++) { //for the total amount of coins, create an object Coin
+                Coin coin = new Coin(this);
+                // random positions with spacing
+                float x = (float) (Math.random() * 80 - 40);
+                float y = (float) (Math.random() * 8 - 2);
+                coin.setPosition(new Vec2(x, y));
+                coin.addCollisionListener(new PlayerCollisions(player, this)); //make sure each coin is detected
+
+                coins.add(coin);  // store in  list
+            } // or create abstract method createCoins() here, and then actually define in other concrete classes like Level1
+            totalCoins = coins.size();
+        }//that would demonstrate polymorphism ...
 
 
-}
+
+
+        public abstract void create ();
+
+
+        @Override
+        public void actionPerformed (ActionEvent ae){
+            if (gameOver || gameWon) {
+                timer.stop();
+                return;
+            }
+
+            timeRemaining--;
+            if (collectedCoins == totalCoins) {
+                gameWon = true;
+                timer.stop(); // try to implement 'play again' or 'next level'
+                // delay before going to next level
+                javax.swing.Timer delay = new javax.swing.Timer(2000, e -> {
+                    game.goToNextLevel();
+                });
+                delay.setRepeats(false); // fire only once
+                delay.start();
+            } else if (timeRemaining <= 0 && collectedCoins < totalCoins) {
+                gameOver = true;
+                timer.stop();
+                // delay before
+                javax.swing.Timer delay = new javax.swing.Timer(2000, e -> {
+                    game.restartLevel();
+                });
+                delay.setRepeats(false); // fire only once
+                delay.start();
+
+
+            }
+        }
+
+
+    }
+

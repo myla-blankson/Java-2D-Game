@@ -16,17 +16,17 @@ public class Game {
 
     //The World in which the bodies move and interact
     //private GameWorld gameWorld;
-    private GameLevel level; //variable level is storing Gamelevel object
+    private GameLevel level; //variable level is storing GameLevel object
 
     // A graphical display of the world (a specialised JPanel)
     private GameView view;
+    private PlayerController controller;
 
 
     public Game() {
 
         // make the world
 
-        //GameWorld gameWorld = new GameWorld(this); // creating game world
         level = new Level1(this); //Level1(this:game)
         //instead of gameWorld as we now are using levels instead of one gameWorld
         //this is the original and current level; level1
@@ -35,7 +35,7 @@ public class Game {
 
         //register all events in main class always...
 
-        PlayerController controller = new PlayerController(level.getPlayer());
+        controller = new PlayerController(level.getPlayer());
         view.addKeyListener(controller); //registered key event to view (source)
 
 //        registering key event
@@ -62,41 +62,33 @@ public class Game {
     }
 
     public void goToNextLevel() {
-        level.stop(); //stop current level
-        //get the player for the next level
-        Player player = level.getPlayer();
-        level = new Level2(this); //new level...
-        level.setPlayer(player);  // Set the same player for the new level
-        view.setWorld(level);
-        view.setZoom(15);
-        level.addStepListener(new Tracker(view, player));  // Keep tracking the player in the new level
-        level.start();
+        System.out.println("Yes, lets go to next level");
+        if (level instanceof Level1) {
+            level.stopLevel(); //stop current level
+            level = new Level2(this); //new level...
+            view.setWorld(level);
+            view.setLevel(level);
+            controller.updatePlayer(level.getPlayer());
+            view.setZoom(15);
+            level.addStepListener(new Tracker(view, level.getPlayer()));  // Keep tracking the player in the new level
+            level.start();
+
+
+        }
     }
 
     //gameWorld now replaced with level
     public void restartLevel() {
-        level.stop();  // Stop the current level
-        Player player = level.getPlayer();  // Get the existing player
-        player.setPosition(new Vec2(0, -10));  // Reset player position back to original
-        player.resetScore();  // Reset player score
-
-        // Reset coins
-        for (Coin c : level.getCoins()) {
-            c.destroy();  // Destroy all coins
-        }
-        level.createCoins(10);  // create new coins for the current level
-        level.totalCoins = level.getCoins().size();  //total of coins = number of coins created
-
-        // Reset level variables
-        level.timeRemaining = 10; //change back to 60 after...
-        level.collectedCoins = 0;
-        level.gameOver = false;
-        level.gameWon = false;
-
+        //level.stop();  // Stop the current level
+        level.stopLevel();
+        level = new Level1(this);
         view.setWorld(level);  // Set the view to the current level
-        view.setZoom(15);      // Set the zoom for the level
-
+        view.setLevel(level); // makes sure level reference is updated
+        view.setZoom(15);
+        level.addStepListener(new Tracker(view, level.getPlayer()) {});
+        controller.updatePlayer(level.getPlayer());
         level.start();  // Restart the level
+        //level.startTimer();
     }
 
 
