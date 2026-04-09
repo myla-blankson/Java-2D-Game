@@ -26,7 +26,7 @@ public class Level1 extends GameLevel { //inherits from the original GameWorld t
         Shape shape = new BoxShape(200, 0.5f);
         StaticBody ground = new StaticBody(this, shape);
         ground.setPosition(new Vec2(0f, -11.5f));
-        ground.addImage(new BodyImage("./data/ground.png", 1f));
+        ground.addImage(new BodyImage("./data/ground.png", 3f));
 
 
         Shape platformShape = new BoxShape(2.5f, 0.5f); // creating default shape of platforms
