@@ -6,17 +6,22 @@ import city.cs.engine.Shape;
 import city.cs.engine.StaticBody;
 import org.jbox2d.common.Vec2;
 
+//concrete class
 public class Level2 extends GameLevel {
     public Level2(Game game) {
         super(game); // enables inheritance as child class calls parent constructor
         createCoins(10);
+        createBird(-8, -2f, -12f, -4f); //platform1
+        createBird(8, 7f, 4f, 12f); //platform2
         totalCoins = coins.size();
-
+        timeRemaining = 45;
 
     }// must be declared abstract... or implement create() method
+
     @Override
     public void create() {
-        //add all GameWorld features... platforms etc.
+
+        //add all GameLevel features... platforms etc.
         //make the ground
 
         Shape shape = new BoxShape(50, 0.5f);
@@ -62,4 +67,9 @@ public class Level2 extends GameLevel {
         coins.add(coin3);
 
     }
+    @Override // concrete
+    public String getLevelName() {
+        return "LEVEL 2";
+    }
 }
+

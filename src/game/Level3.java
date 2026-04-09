@@ -1,33 +1,31 @@
 package game;
-
 import city.cs.engine.BodyImage;
 import city.cs.engine.BoxShape;
 import city.cs.engine.Shape;
 import city.cs.engine.StaticBody;
 import org.jbox2d.common.Vec2;
-
 import javax.swing.*;
 
-//concrete class
-public class Level1 extends GameLevel { //inherits from the original GameWorld to create a level instance
-    public Level1(Game game) {
-        super(game); // enables inheritance as child class calls parent constructor
-        createCoins(10);
+public class Level3 extends GameLevel {
+    public Level3(Game game) {
+        super(game);
         createBird(-8, -2f, -12f, -4f); //platform1
         createBird(8, 7f, 4f, 12f); //platform2
+        createCoins(15);
         totalCoins = coins.size();
-        timeRemaining = 60;
+        timeRemaining = 45;
 
-    } // must be declared abstract... or implement create() method as below
+    }
+
     @Override
     public void create() {
-
+        //add all GameWorld features... platforms etc.
+        //make the ground
 
         Shape shape = new BoxShape(200, 0.5f);
-        StaticBody ground = new StaticBody(this, shape);
+        StaticBody ground = new StaticBody(this, shape); //enabling fixtures...
         ground.setPosition(new Vec2(0f, -11.5f));
         ground.addImage(new BodyImage("./data/ground.png", 1f));
-
 
         Shape platformShape = new BoxShape(2.5f, 0.5f); // creating default shape of platforms
 
@@ -41,17 +39,15 @@ public class Level1 extends GameLevel { //inherits from the original GameWorld t
 
 
 
-        player.setPosition(new Vec2(8, -10));
-        PlayerCollisions pickup = new PlayerCollisions(player,this);
+        player.setPosition(new Vec2(-8, 10));
+        PlayerCollisions pickup = new PlayerCollisions(player, this);
         player.addCollisionListener(pickup);
-
-
     }
     @Override
     public String getLevelName(){
-        return "LEVEL 1";
+        return "LEVEL 3";
     }
 
-    }
 
+}
 
