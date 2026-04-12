@@ -12,10 +12,12 @@ public class PlayerController implements KeyListener { // remember to register e
     // implementing an interface means that you will define the methods (polymorphism)
     private static final float speed = 8;
     private Player player;
+    private Game game;
     private HashMap<Body, BodyImage> hiddenImages = null;
 
-    public PlayerController(Player player) {
+    public PlayerController(Player player, Game game) {
         this.player = player; // store player object inside PlayerController
+        this.game = game; //storing Game object here too
     }
 
     public void setBody(Player player) {
@@ -23,7 +25,8 @@ public class PlayerController implements KeyListener { // remember to register e
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e) {
+    }
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -36,7 +39,11 @@ public class PlayerController implements KeyListener { // remember to register e
         } else if (code == KeyEvent.VK_UP) {
             player.jump(20);
         }else if (code == KeyEvent.VK_DOWN) {
-            player.jump(-20);
+            player.jump(-15);
+        }else if (code == KeyEvent.VK_P) {
+            game.Pause();
+        }else if (code == KeyEvent.VK_ESCAPE) {
+            System.exit(0);
         }
 
 

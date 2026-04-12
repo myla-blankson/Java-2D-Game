@@ -5,7 +5,6 @@ import city.cs.engine.CollisionListener;
 
 public class PlayerCollisions implements CollisionListener {
     private Player player;
-    //private GameWorld gameWorld;
     private GameLevel level;
 
 
@@ -21,7 +20,6 @@ public class PlayerCollisions implements CollisionListener {
             e.getOtherBody().destroy();
             level.collectCoins(); // changed to 'level' instead of 'gameWorld'
             System.out.println("You collected the coin!"+ "score: "+player.getScore());
-            //... sound?
         }
     }
 }

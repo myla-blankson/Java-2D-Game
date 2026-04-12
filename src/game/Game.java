@@ -5,6 +5,7 @@ import city.cs.engine.Shape;
 import org.jbox2d.common.Vec2;
 import javax.swing.Timer;
 import javax.swing.JFrame;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -23,25 +24,24 @@ public class Game {
     private GameView view;
     private PlayerController controller;
     boolean gameStarted = false;
+    boolean paused = false;
+
 
 
     public Game() {
 
         // make the world
-
-
         level = new Level1(this); //Level1(this:game)
-        //instead of gameWorld as we now are using levels instead of one gameWorld
         //this is the original and current level; level1
         view = new GameView(level, 600, 800);
         view.setZoom(15);
 
         //register all events in main class always...
 
-        controller = new PlayerController(level.getPlayer());
+        controller = new PlayerController(level.getPlayer(), this);
         view.addKeyListener(controller); //registered key event to view (source)
 
-//        registering key event
+//        registering key events
         view.addMouseListener(new GiveFocus(view));
 
         level.addStepListener(new Tracker(view, level.getPlayer()) {
@@ -80,6 +80,17 @@ public class Game {
     public void startGame(){
         gameStarted = true;
     }
+    public void Pause(){
+        paused = !paused; //does the opposite
+        if (paused) {
+            level.stop();
+            level.stopLevel();
+        }else{
+            level.start();
+            level.startTimer();
+        }
+    }
+
 
 
     public void goToNextLevel() {
@@ -105,7 +116,6 @@ public class Game {
 
     //gameWorld now replaced with level
     public void restartLevel() {
-        //level.stop();  // Stop the current level
         level.stopLevel();
         level = new Level1(this);
         view.setWorld(level);  // Set the view to the current level
@@ -125,6 +135,6 @@ public class Game {
     // level is storing GameLevel object -- we're looking at what is stored in GameLevel class, not in Level1 etc...
 
 
-//add menu, sound, high-scoring, saving and loading state
+
 
 

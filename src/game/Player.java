@@ -49,14 +49,6 @@ public class Player extends Walker {
         return score;
     }
 
-    public void resetScore() {
-        score = 0;
-    }
-
-    public boolean isAlive() {
-        return isAlive;
-    }
-
 }
 
 

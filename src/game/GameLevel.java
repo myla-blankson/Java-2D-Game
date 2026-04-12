@@ -1,13 +1,13 @@
 package game;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
-import city.cs.engine.Body;
 import javax.swing.Timer;
 import city.cs.engine.World;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +21,6 @@ public abstract class GameLevel extends World implements ActionListener { // abs
     protected int collectedCoins = 0;
     protected List<Coin> coins;
     protected List<Bird> birds;
-    protected float rightBound;
-    protected float leftBound;
     protected int lives =3 ;
     protected int totalCoins;
     protected int timeRemaining = 10;
@@ -75,19 +73,18 @@ public abstract class GameLevel extends World implements ActionListener { // abs
     }
 
 
-    public int getCollectedCoins() {
-        return collectedCoins;
-    }
-
-    public List<Coin> getCoins() {
-        return coins;
-    }
 
     public void loseLife() {
         lives--;
         if (lives <= 0) {
             gameOver = true;
             timer.stop();
+            try { //automatically create this file
+                HighScoreWriter writer = new HighScoreWriter("data/highscore.txt");
+                writer.writeHighScore("Player", player.getScore());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             javax.swing.Timer delay = new javax.swing.Timer(2000, e -> {
                 game.restartLevel();
             });
@@ -146,15 +143,18 @@ public abstract class GameLevel extends World implements ActionListener { // abs
         this.addStepListener(new StepListener() {
             public void preStep(StepEvent e) {}
             public void postStep(StepEvent e) {
+                bird.setAngle(0); //avoid spinning
                 if (bird.getPosition().x >= rightBound || bird.getPosition().x <= leftBound) {
                     bird.reverse();
+                }
+                if (bird.getLinearVelocity().x ==0){
+                    bird.reverse(); //if bird stops moving, reverse
                 }
             }
         });
         birds.add(bird);
     }
 
-    //public abstract void create ();
 
 
         @Override
@@ -166,16 +166,28 @@ public abstract class GameLevel extends World implements ActionListener { // abs
             timeRemaining--; //decrements by 1...
             if (collectedCoins == totalCoins) {
                 gameWon = true;
-                timer.stop(); // try to implement 'play again' or 'next level'
-                // delay before going to next level
+                timer.stop();
+                try { //saving a new score each time the game ends...
+                    HighScoreWriter writer = new HighScoreWriter("data/highscore.txt");
+                    writer.writeHighScore("Player", player.getScore());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //delay before going to next level
                 javax.swing.Timer delay = new javax.swing.Timer(2000, e -> {
                     game.goToNextLevel();
                 });
-                delay.setRepeats(false); // fire only once
+                delay.setRepeats(false); //only once
                 delay.start();
             } else if (timeRemaining <= 0 && collectedCoins < totalCoins) {
                 gameOver = true;
                 timer.stop();
+                try {
+                    HighScoreWriter writer = new HighScoreWriter("data/highscore.txt");
+                    writer.writeHighScore("Player", player.getScore());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 // delay before
                 javax.swing.Timer delay = new javax.swing.Timer(2000, e -> {
                     game.restartLevel();
@@ -184,8 +196,10 @@ public abstract class GameLevel extends World implements ActionListener { // abs
                 delay.start();
 
 
+
             }
         }
+
 
 
     }

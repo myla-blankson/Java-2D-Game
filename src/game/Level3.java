@@ -11,9 +11,14 @@ public class Level3 extends GameLevel {
         super(game);
         createBird(-8, -2f, -12f, -4f); //platform1
         createBird(8, 7f, 4f, 12f); //platform2
-        createCoins(15);
+        createBird(20, -1f, 16f, 24f);//platform3
+        createBird(-20, 4f, -24f, -16f);//platform4
+        createBird(32, 6f, 28f, 36f);//platform5
+        createBird(0, 3f, -4f, 4f);//platform6
+
+        createCoins(10);
         totalCoins = coins.size();
-        timeRemaining = 45;
+        timeRemaining = 35;
 
     }
 
@@ -25,7 +30,7 @@ public class Level3 extends GameLevel {
         Shape shape = new BoxShape(200, 0.5f);
         StaticBody ground = new StaticBody(this, shape); //enabling fixtures...
         ground.setPosition(new Vec2(0f, -11.5f));
-        ground.addImage(new BodyImage("./data/ground.png", 1f));
+        //ground.addImage(new BodyImage("./data/ground.png", 1f));
 
         Shape platformShape = new BoxShape(2.5f, 0.5f); // creating default shape of platforms
 
@@ -36,6 +41,24 @@ public class Level3 extends GameLevel {
         StaticBody platform2 = new StaticBody(this, platformShape);// another platform...
         platform2.setPosition(new Vec2(8, 5.5f));
         platform2.addImage(new BodyImage("./data/platform.png", 1f));
+
+        StaticBody platform3 = new StaticBody(this, platformShape);
+        platform3.setPosition(new Vec2(20, -3f));
+        platform3.addImage(new BodyImage("./data/platform.png", 1f));
+
+        StaticBody platform4 = new StaticBody(this, platformShape);
+        platform4.setPosition(new Vec2(-20, 2f));
+        platform4.addImage(new BodyImage("./data/platform.png", 1f));
+
+        StaticBody platform5 = new StaticBody(this, platformShape);
+        platform5.setPosition(new Vec2(32, 4f));
+        platform5.addImage(new BodyImage("./data/platform.png", 1f));
+
+        StaticBody platform6 = new StaticBody(this, platformShape);
+        platform6.setPosition(new Vec2(0, 1f));
+        platform6.addImage(new BodyImage("./data/platform.png", 1f));
+
+
 
 
 

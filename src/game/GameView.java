@@ -1,22 +1,22 @@
 package game;
 
 import city.cs.engine.UserView;
-import city.cs.engine.World;
+
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.geom.Point2D;
+import java.io.IOException;
 
 //DESCRIBES RENDERING...
 
 public class GameView extends UserView{
 
     private final Image background;
-    //private GameWorld gameWorld; // storing my GameWorld here as a variable so that I can easily access it
+
+    //private GameLevel level; // storing my GameLevel here as a variable (so that I can easily access it)
     private GameLevel level;
     private final Image heartImage = new ImageIcon("data/heart.png").getImage();
+
     public GameView(GameLevel level, int width, int height) {
         super(level, width, height);
         this.level = level;
@@ -33,12 +33,15 @@ public class GameView extends UserView{
 
     @Override
     protected void paintBackground(Graphics2D g) {
-        g.drawImage(background, 0,0, getWidth(), getHeight(), this);
+        g.drawImage(background, 0,-150, getWidth(), getHeight(), this);
+
     }
 
     @Override
     protected void paintForeground(Graphics2D g) {
         super.paintForeground(g);
+//        g.setColor(new Color(120, 60, 30)); // brown like dirt
+//        g.fillRect(0, 380, getWidth(), 20);
 
 
         // font and colour
@@ -48,7 +51,13 @@ public class GameView extends UserView{
         // Draw score
         g.drawString("Score: " + level.getPlayer().getScore(), 20, 30);
         //to access the player, I must access it where it was defined in GameLevel (using the variable i stored my GameLevel in)...
-        // add timer
+        try {
+            HighScoreReader reader = new HighScoreReader("data/highscore.txt");
+            int best = reader.readHighScore();
+            g.drawString("Best: " + best, 20, 90);
+        } catch (IOException e) {
+            g.drawString("Best: 0", 20, 90);
+        }
         g.drawString("Time: " + level.getTimeRemaining(), 20, 60);
         //this getTimeRemaining method will give the player a certain amount of time as a challenge...
         //defined in GameLevel
@@ -57,6 +66,7 @@ public class GameView extends UserView{
             g.drawString("Lives: " , 450, 55);
             g.drawImage(heartImage, 500 +(x*30), 30,35,40, this);//space of 30 pixels
         }
+
 
         if (!level.getGame().isGameStarted()) { // whilst the game hasn't started, return this screen:
             g.setFont(new Font("Arial", Font.BOLD, 50));
@@ -67,6 +77,12 @@ public class GameView extends UserView{
             g.drawString("CLICK TO START", 170, 400);
             return;
         }
+
+        g.setFont(new Font("Arial", Font.PLAIN, 12));
+        g.setColor(Color.BLUE);
+        g.drawString("Collect all the coins before the timer ends!", 20, 565);
+        g.drawString("Press, 'P' to pause and resume. Press, 'ESC' to finish.", 20, 575);
+
 
         g.setFont(new Font("Arial", Font.BOLD, 20));
         g.setColor(Color.YELLOW);
@@ -89,6 +105,7 @@ public class GameView extends UserView{
             g.setColor(Color.RED);
             g.drawString("GAME OVER", 250, 300);
         }
+
     }
     }
 
